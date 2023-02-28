@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categories {
+  id                 BigInt              @id @default(autoincrement())
+  name               String              @default("") @db.VarChar
+  parent_category_id BigInt?
+  created_at         DateTime            @db.Timestamp(6)
+  updated_at         DateTime            @db.Timestamp(6)
+  categories         categories?         @relation("categoriesTocategories", fields: [parent_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_b7f1bb9825")
+  other_categories   categories[]        @relation("categoriesTocategories")
+  category_products  category_products[]
+
+  @@index([parent_category_id], map: "index_categories_on_parent_category_id")
+}
+
+model category_products {
+  id          BigInt      @id @default(autoincrement())
+  product_id  BigInt?
+  category_id BigInt?
+  created_at  DateTime    @db.Timestamp(6)
+  updated_at  DateTime    @db.Timestamp(6)
+  categories  categories? @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_2bdd6d7205")
+  products    products?   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_8f1c3ff2d1")
+
+  @@index([category_id], map: "index_category_products_on_category_id")
+  @@index([product_id], map: "index_category_products_on_product_id")
+}
+
+model products {
+  id                BigInt              @id @default(autoincrement())
+  name              String              @default("") @db.VarChar
+  description       String              @default("")
+  price             Int
+  rating            Int                 @default(0)
+  status            Int                 @default(0)
+  stock             Int                 @default(0)
+  created_at        DateTime            @db.Timestamp(6)
+  updated_at        DateTime            @db.Timestamp(6)
+  category_products category_products[]
+}
