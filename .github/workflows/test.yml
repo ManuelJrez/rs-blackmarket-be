@@ -29,3 +29,10 @@ jobs:
 
       - name: Run Tests
         run: pnpm run test:cov
+      
+      - name: Publish Code Coverage
+        uses: paambaati/codeclimate-action@v3.2.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: pnpm run test:cov
