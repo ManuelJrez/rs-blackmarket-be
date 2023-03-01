@@ -20,10 +20,16 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@adminjs/express": "^5.1.0",
+    "@adminjs/nestjs": "^5.1.1",
+    "@adminjs/prisma": "^3.0.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.10.1",
+    "adminjs": "^6.8.7",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.17.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
